@@ -17,14 +17,19 @@ body {
 }
 
 .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    box-shadow: 0 3px 15px #8d41651a;
+}
+
+/* ── Top bar ── */
+.header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 18px 7%;
-    background: white;
-    box-shadow: 0 3px 15px #8d41651a;
+    padding: 14px 7%;
 }
 
 .logo {
@@ -34,12 +39,166 @@ body {
     text-decoration: none;
 }
 
+/* removed old inline whatsapp — now floating */
 .whatsapp {
-    background: #198754;
+    display: none;
+}
+
+/* ── Hamburger button ── */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.hamburger:hover {
+    background: #fff0f6;
+}
+
+.hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #b93670;
+    border-radius: 3px;
+    transition: transform 0.35s ease, opacity 0.25s ease;
+    transform-origin: center;
+}
+
+/* Animate to X when open */
+.hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ── Nav bar ── */
+.navbar {
+    background: #b93670;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.navbar::-webkit-scrollbar { display: none; }
+
+.navbar a {
     color: white;
     text-decoration: none;
-    padding: 11px 18px;
-    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 13px 18px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    background: #a02d62;
+    border-bottom-color: #ffd6ea;
+}
+
+/* ── Mobile navbar ── */
+@media (max-width: 700px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+        gap: 0;
+        /* hidden by default */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    .navbar.open {
+        max-height: 400px;
+    }
+
+    .navbar a {
+        padding: 14px 7%;
+        border-bottom: 1px solid #c9457530;
+        font-size: 15px;
+    }
+
+    .navbar a:last-child {
+        border-bottom: none;
+    }
+
+    .navbar a:hover,
+    .navbar a.active {
+        background: #a02d62;
+        border-bottom-color: #c9457530;
+        border-left: 4px solid #ffd6ea;
+    }
+}
+
+/* ── Floating WhatsApp button ── */
+.wa-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 6px 22px #25d36650;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    /* collapsed by default */
+    max-width: 56px;
+    transition: max-width 0.4s ease, box-shadow 0.3s;
+}
+
+.wa-float:hover {
+    max-width: 260px;
+    box-shadow: 0 8px 28px #25d36680;
+}
+
+.wa-float .wa-icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.wa-float .wa-label {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    padding-right: 18px;
+    opacity: 0;
+    transition: opacity 0.25s 0.15s;
+}
+
+.wa-float:hover .wa-label {
+    opacity: 1;
 }
 
 .hero {
